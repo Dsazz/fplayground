@@ -21,15 +21,15 @@ class StarLinePath {
     final height = size.height;
     final middleHeight = height * 0.5;
 
-    final wrapRadius = StarButton.RADIUS * 1.5;
-
-    final offsetsWrap1 = _calcWrapCirclePoints(
-      (width * 0.2) + StarButton.RADIUS_SHIFT,
-      middleHeight,
-      wrapRadius - StarButton.RADIUS_SHIFT,
-    );
+    final wrapRadius = AnimatedStarButton.RADIUS * 1.5;
 
     var path = Path();
+
+    final offsetsWrap1 = _calcWrapCirclePoints(
+      (width * 0.2) + AnimatedStarButton.RADIUS_SHIFT,
+      middleHeight,
+      wrapRadius - AnimatedStarButton.RADIUS_SHIFT,
+    );
 
     final l1WrapOffset = offsetsWrap1[0];
     final r1WrapOffset = offsetsWrap1[1];
@@ -43,7 +43,7 @@ class StarLinePath {
     final offsetsWrap2 = _calcWrapCirclePoints(
       width * 0.5,
       middleHeight,
-      wrapRadius - StarButton.RADIUS_SHIFT,
+      wrapRadius - AnimatedStarButton.RADIUS_SHIFT,
     );
     final l2WrapOffset = offsetsWrap2[0];
     final r2WrapOffset = offsetsWrap2[1];
@@ -58,9 +58,9 @@ class StarLinePath {
     );
 
     final offsetsWrap3 = _calcWrapCirclePoints(
-      width * 0.8 - StarButton.RADIUS_SHIFT,
+      width * 0.8 - AnimatedStarButton.RADIUS_SHIFT,
       middleHeight,
-      wrapRadius - StarButton.RADIUS_SHIFT,
+      wrapRadius - AnimatedStarButton.RADIUS_SHIFT,
     );
     final l3WrapOffset = offsetsWrap3[0];
     final r3WrapOffset = offsetsWrap3[1];
