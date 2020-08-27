@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:fplayground/screen/home/animation/base_animation.dart';
+import 'package:fplayground/service/audio_player.dart';
 import 'package:fplayground/util/util.dart';
+import 'package:get_it/get_it.dart';
 import 'package:path_drawing/path_drawing.dart';
 
 class GhostPainter extends CustomPainter {
@@ -181,22 +181,13 @@ class AnimatedGhostPainterState extends State<AnimatedGhostPainter>
   AnimationController _bouncingController;
   Animation<double> _bouncingAnimation;
 
-  static AudioPlayer _audioPlayer = AudioPlayer();
-  static AudioCache _player = AudioCache(fixedPlayer: _audioPlayer);
+  AudioPlayerController _player = GetIt.I<AudioPlayerController>();
 
   void onPressed() {
-    _playSound();
+    _player.play("sound/ghost.mp3");
+
     if (_bouncingController.isAnimating) _bouncingController.reset();
     _controller.isCompleted ? _controller.reverse() : _controller.forward();
-  }
-
-  _stopSound() async {
-    await _audioPlayer.stop();
-  }
-
-  void _playSound() {
-    _stopSound();
-    _player.play("sound/ghost.mp3", mode: PlayerMode.LOW_LATENCY);
   }
 
   @override
@@ -226,14 +217,15 @@ class AnimatedGhostPainterState extends State<AnimatedGhostPainter>
     )..addListener(() {
         setState(() {});
       });
-
-    _player.load("sound/ghost.mp3");
   }
 
   @override
   void dispose() {
+    _player.stopSound();
+
     _controller?.dispose();
     _bouncingController?.dispose();
+
     super.dispose();
   }
 

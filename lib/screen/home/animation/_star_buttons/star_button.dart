@@ -1,8 +1,7 @@
 import 'dart:ui';
 
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:fplayground/service/audio_player.dart';
 import 'package:get_it/get_it.dart';
 
 typedef StarActionCallback = void Function(Offset currPnt);
@@ -40,7 +39,7 @@ class AnimatedStarButton extends StatefulWidget {
 
 class AnimatedStarButtonState extends State<StatefulWidget>
     with TickerProviderStateMixin {
-  AudioCache player = GetIt.I<AudioCache>();
+  AudioPlayerController player = GetIt.I<AudioPlayerController>();
 
   AnimationController controller;
   Animation<double> animation;
@@ -109,7 +108,7 @@ class AnimatedStarButtonState extends State<StatefulWidget>
   }
 
   void _doAction() {
-    playSound();
+    player.play("sound/${key.value}.mp3");
 
     controller.reset();
     controller.forward();
@@ -117,19 +116,8 @@ class AnimatedStarButtonState extends State<StatefulWidget>
     actionTaken = true;
   }
 
-  void _stopSound() async {
-    await player.fixedPlayer.stop();
-  }
-
-  void playSound() async {
-    _stopSound();
-    player.play("sound/${key.value}.mp3", mode: PlayerMode.LOW_LATENCY);
-  }
-
   @override
   void dispose() {
-    _stopSound();
-
     controller.dispose();
     btnController.dispose();
 
