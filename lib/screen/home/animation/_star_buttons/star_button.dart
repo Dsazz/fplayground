@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:fplayground/component/clip_oval/clipper.dart';
-import 'package:fplayground/component/clip_oval/shadow.dart';
 import 'package:get_it/get_it.dart';
 
 typedef StarActionCallback = void Function(Offset currPnt);
@@ -180,28 +178,30 @@ class StarButton extends StatelessWidget {
         onTap: onTap,
         onTapDown: onTapDown,
         onTapUp: onTapUp,
-        child: ClipOvalShadow(
-          shadow: const Shadow(
-            color: Colors.amber,
-            offset: Offset(1.0, 1.0),
-            blurRadius: 2,
+        child: Container(
+          width: SIZE,
+          height: SIZE,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.amber,
+                blurRadius: 6,
+                spreadRadius: 3,
+              )
+            ],
           ),
-          clipper: CustomClipperOval(radiusShift: RADIUS_SHIFT),
-          child: ClipOval(
-            child: Material(
-              color: Colors.white, // button color
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Positioned(
-                    top: SIZE * 0.25,
-                    left: SIZE * 0.25,
-                    child: Icon(Icons.star, color: Colors.black38),
-                  ),
-                  const Icon(Icons.star, color: Colors.orange),
-                ],
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              const Positioned(
+                top: SIZE * 0.25,
+                left: SIZE * 0.25,
+                child: Icon(Icons.star, color: Colors.black38),
               ),
-            ),
+              const Icon(Icons.star, color: Colors.orange),
+            ],
           ),
         ),
       ),
